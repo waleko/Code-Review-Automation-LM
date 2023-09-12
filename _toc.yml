@@ -1,0 +1,9 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+root: docs/intro
+chapters:
+- file: notebooks/1_crawl_reviews
+- file: notebooks/2_inference
+- file: notebooks/3_evaluation

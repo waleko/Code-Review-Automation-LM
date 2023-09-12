@@ -1,0 +1,10 @@
+PyGithub
+requests
+torch
+transformers
+tqdm
+numpy
+pandas
+sacrebleu
+
+jupyter-book
