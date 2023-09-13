@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Collecting Code Review Data &#8212; CodeReviewer ML Performance</title>
+    <title>&lt;no title&gt; &#8212; CodeReviewer ML Performance</title>
   
   
   
@@ -61,11 +61,10 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/1_crawl_reviews';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'docs/conclusion';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="CodeReviewer Model Inference" href="2_inference.html" />
-    <link rel="prev" title="CodeReviewer ML Performance" href="../docs/intro.html" />
+    <link rel="prev" title="Predictions Evaluation" href="../notebooks/3_evaluation.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -131,7 +130,7 @@ const thebe_selector_output = ".output, .cell_output"
         <div class="sidebar-primary-item">
   
 
-<a class="navbar-brand logo" href="../docs/intro.html">
+<a class="navbar-brand logo" href="intro.html">
   
   
   
@@ -145,15 +144,15 @@ const thebe_selector_output = ".output, .cell_output"
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
-                <a class="reference internal" href="../docs/intro.html">
+                <a class="reference internal" href="intro.html">
                     CodeReviewer ML Performance
                 </a>
             </li>
         </ul>
-        <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Collecting Code Review Data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="2_inference.html">CodeReviewer Model Inference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3_evaluation.html">Predictions Evaluation</a></li>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/1_collect_reviews.html">Collecting Code Review Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/2_inference.html">CodeReviewer Model Inference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/3_evaluation.html">Predictions Evaluation</a></li>
 </ul>
 
     </div>
@@ -223,7 +222,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="../_sources/notebooks/1_crawl_reviews.ipynb" target="_blank"
+      <li><a href="../_sources/docs/conclusion.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -233,7 +232,7 @@ const thebe_selector_output = ".output, .cell_output"
 <span class="btn__icon-container">
   <i class="fas fa-file"></i>
   </span>
-<span class="btn__text-container">.ipynb</span>
+<span class="btn__text-container">.md</span>
 </a>
 </li>
       
@@ -292,7 +291,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
 </div></div>
       
     </div>
@@ -303,11 +304,19 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Collecting Code Review Data</h1>
+    <h1><no title></h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="simple visible nav section-nav flex-column">
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -317,69 +326,7 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="collecting-code-review-data">
-<h1>Collecting Code Review Data<a class="headerlink" href="#collecting-code-review-data" title="Permalink to this heading">#</a></h1>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">getpass</span> <span class="kn">import</span> <span class="n">getpass</span>
-
-<span class="kn">from</span> <span class="nn">github</span> <span class="kn">import</span> <span class="n">Auth</span><span class="p">,</span> <span class="n">Github</span> 
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">tqdm.autonotebook</span> <span class="kn">import</span> <span class="n">tqdm</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="n">token</span> <span class="o">=</span> <span class="n">getpass</span><span class="p">(</span><span class="s2">&quot;Enter your Github Access Token: &quot;</span><span class="p">)</span>
-<span class="k">if</span> <span class="n">token</span><span class="p">:</span>
-    <span class="c1"># using token</span>
-    <span class="n">g</span> <span class="o">=</span> <span class="n">Github</span><span class="p">(</span><span class="n">auth</span><span class="o">=</span><span class="n">Auth</span><span class="o">.</span><span class="n">Token</span><span class="p">(</span><span class="n">token</span><span class="p">))</span>
-<span class="k">else</span><span class="p">:</span>
-    <span class="c1"># no token</span>
-    <span class="c1"># warn: possibly rate limited</span>
-    <span class="n">g</span> <span class="o">=</span> <span class="n">Github</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="n">repo_name</span> <span class="o">=</span> <span class="s2">&quot;openwisp/openwisp-controller&quot;</span> <span class="c1"># repo to use</span>
-<span class="n">num_comments</span> <span class="o">=</span> <span class="mi">1000</span> <span class="c1"># number of comments to load</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="n">repo</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">get_repo</span><span class="p">(</span><span class="n">repo_name</span><span class="p">)</span>
-<span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="n">comment_pages</span> <span class="o">=</span> <span class="n">repo</span><span class="o">.</span><span class="n">get_pulls_review_comments</span><span class="p">()</span>
-<span class="k">for</span> <span class="n">comment</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">comment_pages</span><span class="p">[:</span><span class="n">num_comments</span><span class="p">],</span> <span class="n">total</span><span class="o">=</span><span class="n">num_comments</span><span class="p">):</span>
-    <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s1">&#39;msg&#39;</span><span class="p">:</span> <span class="n">repo</span><span class="o">.</span><span class="n">get_git_commit</span><span class="p">(</span><span class="n">comment</span><span class="o">.</span><span class="n">commit_id</span><span class="p">)</span><span class="o">.</span><span class="n">message</span><span class="p">,</span> <span class="s1">&#39;diff_hunk&#39;</span><span class="p">:</span> <span class="n">comment</span><span class="o">.</span><span class="n">diff_hunk</span><span class="p">,</span> <span class="s1">&#39;src_file&#39;</span><span class="p">:</span> <span class="n">comment</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;human_review&#39;</span><span class="p">:</span> <span class="n">comment</span><span class="o">.</span><span class="n">body</span><span class="p">})</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;../data/</span><span class="si">{</span><span class="n">repo_name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;_&quot;</span><span class="p">)</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">num_comments</span><span class="si">}</span><span class="s1">.csv&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-
+  
     <script type="text/x-thebe-config">
     {
         requestKernel: true,
@@ -393,7 +340,7 @@ document.write(`
         },
         kernelOptions: {
             name: "python3",
-            path: "./notebooks"
+            path: "./docs"
         },
         predefinedOutput: true
     }
@@ -412,22 +359,13 @@ document.write(`
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../docs/intro.html"
+       href="../notebooks/3_evaluation.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">CodeReviewer ML Performance</p>
+        <p class="prev-next-title">Predictions Evaluation</p>
       </div>
-    </a>
-    <a class="right-next"
-       href="2_inference.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">CodeReviewer Model Inference</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div></div>
   
@@ -438,6 +376,20 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="simple visible nav section-nav flex-column">
+</ul>
+
+  </nav></div>
+
+</div></div>
               
             
           </div>
