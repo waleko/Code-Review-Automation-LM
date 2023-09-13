@@ -4,6 +4,7 @@
 format: jb-book
 root: docs/intro
 chapters:
-- file: notebooks/1_crawl_reviews
+- file: notebooks/1_collect_reviews
 - file: notebooks/2_inference
 - file: notebooks/3_evaluation
+- file: docs/conclusion
