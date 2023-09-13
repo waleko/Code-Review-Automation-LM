@@ -339,7 +339,7 @@ document.write(`
 <p>Let’s generate code reviews using <code class="docutils literal notranslate"><span class="pre">microsoft/codereviewer</span></code> model <span id="id1">[<a class="reference internal" href="../docs/intro.html#id2" title="Zhiyu Li, Shuai Lu, Daya Guo, Nan Duan, Shailesh Jannu, Grant Jenks, Deep Majumder, Jared Green, Alexey Svyatkovskiy, Shengyu Fu, and others. Codereviewer: pre-training for automating code review activities. arXiv preprint arXiv:2203.09095, 2022.">LLG+22</a>]</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -355,27 +355,10 @@ document.write(`
 </div>
 <section id="tokenizers-and-datasets">
 <h2>1 Tokenizers and Datasets<a class="headerlink" href="#tokenizers-and-datasets" title="Permalink to this heading">#</a></h2>
-<p>P.S. Incredible thanks to the authors of <span id="id2">[<a class="reference internal" href="../docs/intro.html#id4" title="CodeBERT CodeReviewer - a Hugging Face Space by p4vv37. URL: https://huggingface.co/spaces/p4vv37/CodeBERT_CodeReviewer (visited on 2023-09-13).">p4v</a>]</span> for providing the code for working with the tokenizer and the dataset.</p>
+<p>P.S. Enormous thanks to the authors of <span id="id2">[<a class="reference internal" href="../docs/intro.html#id4" title="CodeBERT CodeReviewer - a Hugging Face Space by p4vv37. URL: https://huggingface.co/spaces/p4vv37/CodeBERT_CodeReviewer (visited on 2023-09-13).">p4v</a>]</span> for providing open-source for working with the tokenizer and the dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="n">filename</span> <span class="o">=</span> <span class="s2">&quot;../data/msg-test.csv&quot;</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
-<span class="n">df</span><span class="p">[</span><span class="s1">&#39;msg&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">df</span><span class="p">[</span><span class="s1">&#39;src_file&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="c1"># download tokenizer from huggingface</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># download tokenizer from huggingface</span>
 <span class="n">tokenizer</span> <span class="o">=</span> <span class="n">AutoTokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;microsoft/codereviewer&quot;</span><span class="p">)</span>
 
 <span class="c1"># add required special tokens to the tokenizer</span>
@@ -386,7 +369,7 @@ document.write(`
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ReviewsDataset</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ReviewsDataset</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">tokenizer</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;human_review&quot;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">code</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;diff_hunk&quot;</span><span class="p">]</span>
@@ -407,7 +390,7 @@ document.write(`
 <p>Here we load the data and create a dataloader for each project.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="n">filenames</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;../data/msg-test.csv&#39;</span><span class="p">,</span> <span class="s1">&#39;JetBrains_kotlin_1000.csv&#39;</span><span class="p">,</span> <span class="s1">&#39;microsoft_vscode_1000.csv&#39;</span><span class="p">,</span> <span class="s1">&#39;transloadit_uppy_1000.csv&#39;</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">filenames</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;../data/msg-test.csv&#39;</span><span class="p">,</span> <span class="s1">&#39;../data/JetBrains_kotlin_1000.csv&#39;</span><span class="p">,</span> <span class="s1">&#39;../data/microsoft_vscode_1000.csv&#39;</span><span class="p">,</span> <span class="s1">&#39;../data/transloadit_uppy_1000.csv&#39;</span><span class="p">]</span>
 
 <span class="n">datasets</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">dataloaders</span> <span class="o">=</span> <span class="p">[]</span>
@@ -415,7 +398,7 @@ document.write(`
     <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
     <span class="n">dataset</span> <span class="o">=</span> <span class="n">ReviewsDataset</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">tokenizer</span><span class="p">)</span>
     <span class="n">datasets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
-    <span class="n">dataloader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="c1"># batch_size=6 for 8GB GPU</span>
+    <span class="n">dataloader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="c1"># batch_size=6 for 8GB GPU</span>
     <span class="n">dataloaders</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dataloader</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -433,7 +416,7 @@ document.write(`
 <h3>Predict function<a class="headerlink" href="#predict-function" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">dataloader</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="s1">&#39;cuda&#39;</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">dataloader</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="s1">&#39;cuda&#39;</span><span class="p">):</span>
     <span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
     <span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
     
@@ -466,7 +449,7 @@ document.write(`
 <p>The model is available on the HuggingFace model hub: <a class="reference external" href="https://huggingface.co/microsoft/codereviewer">https://huggingface.co/microsoft/codereviewer</a></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="c1"># download the pretrained model from huggingface</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># download the pretrained model from huggingface</span>
 <span class="n">hf_model</span> <span class="o">=</span> <span class="n">AutoModelForSeq2SeqLM</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;microsoft/codereviewer&quot;</span><span class="p">)</span>
 
 <span class="k">for</span> <span class="n">filename</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">dataloader</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">filenames</span><span class="p">,</span> <span class="n">datasets</span><span class="p">,</span> <span class="n">dataloaders</span><span class="p">):</span>
@@ -477,6 +460,14 @@ document.write(`
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 636/636 [10:03&lt;00:00,  1.05it/s]
+100%|██████████| 63/63 [02:42&lt;00:00,  2.58s/it]
+100%|██████████| 63/63 [01:46&lt;00:00,  1.70s/it]
+100%|██████████| 63/63 [01:19&lt;00:00,  1.26s/it]
+</pre></div>
+</div>
+</div>
 </div>
 </section>
 <section id="fine-tuned-codereviewer">
@@ -484,7 +475,7 @@ document.write(`
 <p>I fine-tuned the model on the CodeReviewer dataset on the <code class="docutils literal notranslate"><span class="pre">msg</span></code> task using the <a class="reference external" href="https://github.com/microsoft/CodeBERT/tree/master/CodeReviewer#3-finetuneinference">instructions</a> from the authors of <span id="id4">[<a class="reference internal" href="../docs/intro.html#id2" title="Zhiyu Li, Shuai Lu, Daya Guo, Nan Duan, Shailesh Jannu, Grant Jenks, Deep Majumder, Jared Green, Alexey Svyatkovskiy, Shengyu Fu, and others. Codereviewer: pre-training for automating code review activities. arXiv preprint arXiv:2203.09095, 2022.">LLG+22</a>]</span>.</p>
 <p>For the fine-tuning I used the following parameters:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">batch_size=6</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">batch_size=16</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">learning_rate=3e-4</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">max_source_length=512</span></code></p></li>
 </ul>
@@ -492,7 +483,7 @@ document.write(`
 <p>I have made the checkpoint available on the HuggingFace model hub: <a class="reference external" href="https://huggingface.co/waleko/codereviewer-finetuned-msg">https://huggingface.co/waleko/codereviewer-finetuned-msg</a></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="c1"># download the fine-tuned model</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># download the fine-tuned model</span>
 <span class="n">ft_model</span> <span class="o">=</span> <span class="n">AutoModelForSeq2SeqLM</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;waleko/codereviewer-finetuned-msg&quot;</span><span class="p">)</span>
 
 <span class="k">for</span> <span class="n">filename</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">dataloader</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">filenames</span><span class="p">,</span> <span class="n">datasets</span><span class="p">,</span> <span class="n">dataloaders</span><span class="p">):</span>
@@ -500,6 +491,20 @@ document.write(`
     <span class="n">df_pred</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;code&#39;</span><span class="p">:</span> <span class="n">dataset</span><span class="o">.</span><span class="n">code</span><span class="p">,</span> <span class="s1">&#39;target&#39;</span><span class="p">:</span> <span class="n">dataset</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="s1">&#39;prediction&#39;</span><span class="p">:</span> <span class="n">preds</span><span class="p">})</span>
     <span class="n">df_pred</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span><span class="o">.</span><span class="n">with_suffix</span><span class="p">(</span><span class="s1">&#39;.finetuned_pred.csv&#39;</span><span class="p">))</span>
     <span class="n">df_pred</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading (…)lve/main/config.json: 100%|██████████| 2.13k/2.13k [00:00&lt;00:00, 2.06MB/s]
+Downloading pytorch_model.bin: 100%|██████████| 892M/892M [00:22&lt;00:00, 40.2MB/s] 
+Some weights of the model checkpoint at waleko/codereviewer-finetuned-msg were not used when initializing T5ForConditionalGeneration: [&#39;cls_head.weight&#39;, &#39;cls_head.bias&#39;]
+- This IS expected if you are initializing T5ForConditionalGeneration from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing T5ForConditionalGeneration from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+Downloading (…)neration_config.json: 100%|██████████| 168/168 [00:00&lt;00:00, 40.1kB/s]
+100%|██████████| 636/636 [14:22&lt;00:00,  1.36s/it]
+100%|██████████| 63/63 [01:31&lt;00:00,  1.45s/it]
+100%|██████████| 63/63 [01:24&lt;00:00,  1.35s/it]
+100%|██████████| 63/63 [01:21&lt;00:00,  1.29s/it]
 </pre></div>
 </div>
 </div>
