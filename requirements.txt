@@ -5,4 +5,3 @@ transformers
 tqdm
 numpy
 pandas
-sacrebleu
