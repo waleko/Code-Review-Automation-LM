@@ -362,6 +362,12 @@ document.write(`
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/conda/lib/python3.8/site-packages/tqdm/auto.py:22: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html
+  from .autonotebook import tqdm as notebook_tqdm
+</pre></div>
+</div>
+</div>
 </div>
 <section id="tokenizers-and-datasets">
 <h2>1 Tokenizers and Datasets<a class="headerlink" href="#tokenizers-and-datasets" title="Permalink to this heading">#</a></h2>
@@ -373,6 +379,15 @@ document.write(`
 
 <span class="c1"># add required special tokens to the tokenizer</span>
 <span class="n">tokenizer</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">process_tokenizer</span><span class="p">(</span><span class="n">tokenizer</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading (…)okenizer_config.json: 100%|██████████| 1.29k/1.29k [00:00&lt;00:00, 169kB/s]
+Downloading (…)olve/main/vocab.json: 100%|██████████| 575k/575k [00:00&lt;00:00, 5.89MB/s]
+Downloading (…)olve/main/merges.txt: 100%|██████████| 294k/294k [00:00&lt;00:00, 1.09MB/s]
+Downloading (…)in/added_tokens.json: 100%|██████████| 1.87k/1.87k [00:00&lt;00:00, 1.13MB/s]
+Downloading (…)cial_tokens_map.json: 100%|██████████| 913/913 [00:00&lt;00:00, 515kB/s]
 </pre></div>
 </div>
 </div>
@@ -471,6 +486,17 @@ document.write(`
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading (…)lve/main/config.json: 100%|██████████| 2.13k/2.13k [00:00&lt;00:00, 478kB/s]
+Downloading pytorch_model.bin: 100%|██████████| 892M/892M [00:02&lt;00:00, 306MB/s] 
+Downloading (…)neration_config.json: 100%|██████████| 168/168 [00:00&lt;00:00, 36.7kB/s]
+100%|██████████| 636/636 [11:08&lt;00:00,  1.05s/it]
+100%|██████████| 63/63 [03:31&lt;00:00,  3.35s/it]
+100%|██████████| 63/63 [01:57&lt;00:00,  1.87s/it]
+100%|██████████| 63/63 [02:39&lt;00:00,  2.53s/it]
+</pre></div>
+</div>
+</div>
 </div>
 </section>
 <section id="fine-tuned-codereviewer">
@@ -494,6 +520,20 @@ document.write(`
     <span class="n">df_pred</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;code&#39;</span><span class="p">:</span> <span class="n">dataset</span><span class="o">.</span><span class="n">code</span><span class="p">,</span> <span class="s1">&#39;target&#39;</span><span class="p">:</span> <span class="n">dataset</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="s1">&#39;prediction&#39;</span><span class="p">:</span> <span class="n">preds</span><span class="p">})</span>
     <span class="n">df_pred</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span><span class="o">.</span><span class="n">with_suffix</span><span class="p">(</span><span class="s1">&#39;.finetuned_pred.csv&#39;</span><span class="p">))</span>
     <span class="n">df_pred</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading (…)lve/main/config.json: 100%|██████████| 2.13k/2.13k [00:00&lt;00:00, 290kB/s]
+Downloading pytorch_model.bin: 100%|██████████| 892M/892M [00:22&lt;00:00, 39.4MB/s] 
+Some weights of the model checkpoint at waleko/codereviewer-finetuned-msg were not used when initializing T5ForConditionalGeneration: [&#39;cls_head.bias&#39;, &#39;cls_head.weight&#39;]
+- This IS expected if you are initializing T5ForConditionalGeneration from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing T5ForConditionalGeneration from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+Downloading (…)neration_config.json: 100%|██████████| 168/168 [00:00&lt;00:00, 49.2kB/s]
+100%|██████████| 636/636 [15:58&lt;00:00,  1.51s/it]
+100%|██████████| 63/63 [01:41&lt;00:00,  1.61s/it]
+100%|██████████| 63/63 [01:32&lt;00:00,  1.47s/it]
+100%|██████████| 63/63 [01:27&lt;00:00,  1.39s/it]
 </pre></div>
 </div>
 </div>
