@@ -350,12 +350,6 @@ document.write(`
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/conda/lib/python3.8/site-packages/tqdm/auto.py:22: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html
-  from .autonotebook import tqdm as notebook_tqdm
-</pre></div>
-</div>
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -366,15 +360,19 @@ document.write(`
     <span class="n">hf_preds</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">hf_preds_file</span><span class="p">)</span>
     <span class="n">fine_tuned</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">fine_tuned_file</span><span class="p">)</span>
     <span class="c1"># put in df</span>
-    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;code&#39;</span><span class="p">:</span> <span class="n">fine_tuned</span><span class="p">[</span><span class="s1">&#39;code&#39;</span><span class="p">],</span> <span class="s1">&#39;hf_pred&#39;</span><span class="p">:</span> <span class="n">hf_preds</span><span class="p">[</span><span class="s1">&#39;prediction&#39;</span><span class="p">],</span> <span class="s1">&#39;fine_tuned_pred&#39;</span><span class="p">:</span> <span class="n">fine_tuned</span><span class="p">[</span><span class="s1">&#39;prediction&#39;</span><span class="p">]})</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;code&#39;</span><span class="p">:</span> <span class="n">fine_tuned</span><span class="p">[</span><span class="s1">&#39;code&#39;</span><span class="p">],</span>
+     <span class="s1">&#39;hf_pred&#39;</span><span class="p">:</span> <span class="n">hf_preds</span><span class="p">[</span><span class="s1">&#39;prediction&#39;</span><span class="p">],</span>
+     <span class="s1">&#39;fine_tuned_pred&#39;</span><span class="p">:</span> <span class="n">fine_tuned</span><span class="p">[</span><span class="s1">&#39;prediction&#39;</span><span class="p">],</span>
+     <span class="s1">&#39;target&#39;</span><span class="p">:</span> <span class="n">fine_tuned</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]})</span>
     <span class="n">df</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">regex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="c1"># print sample with predictions</span>
-    <span class="n">sample</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">sample_size</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">code</span><span class="p">,</span> <span class="n">hf_pred</span><span class="p">,</span> <span class="n">fine_tuned_pred</span> <span class="ow">in</span> <span class="n">sample</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">():</span>
+    <span class="n">sample</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">sample_size</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">code</span><span class="p">,</span> <span class="n">hf_pred</span><span class="p">,</span> <span class="n">fine_tuned_pred</span><span class="p">,</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">sample</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">():</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;-------------------&#39;</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">code</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;HF Pred: </span><span class="si">{</span><span class="n">hf_pred</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Fine Tuned Pred: </span><span class="si">{</span><span class="n">fine_tuned_pred</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;## Human Review: </span><span class="si">{</span><span class="n">target</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;## HF Pred: </span><span class="si">{</span><span class="n">hf_pred</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;## Fine Tuned Pred: </span><span class="si">{</span><span class="n">fine_tuned_pred</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">df</span>
 </pre></div>
 </div>
@@ -429,81 +427,77 @@ document.write(`
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-------------------
-@@ -20,10 +20,6 @@ from pylint import checkers, interfaces
- from pylint.checkers import utils
+@@ -1,6 +1,7 @@
+ # frozen_string_literal: true
 
+ require &#39;hocon&#39;
++require &#39;bolt/error&#39;
 
--def _is_constant_empty_str(node):
--    return isinstance(node, nodes.Const) and node.value == &quot;&quot;
--
--
- class CompareToEmptyStringChecker(checkers.BaseChecker):
-     &quot;&quot;&quot;Checks for comparisons to empty string.
-     Most of the times you should use the fact that empty strings are false.
-HF Pred: Why is this removed?
-Fine Tuned Pred: Removing this helper function because it isn&#39;t used anywhere else and `_is_constant_empty_str` is used in other places.
+ class TransportConfig
+   attr_accessor :host, :port, :ssl_cert, :ssl_key, :ssl_ca_cert, :ssl_cipher_suites,
+## Human Review: Looks like this isn&#39;t used in this file?
+## HF Pred: Why do we need this?
+## Fine Tuned Pred: I am surprised you don&#39;t use `hocon` here.
 -------------------
-@@ -14,7 +14,7 @@ import net.sourceforge.pmd.RuleViolation;
- /**
-  * A {@link RuleViolation} implementation that is immutable, and therefore cache friendly
-  */
--public final class CachedRuleViolation implements RuleViolation {
-+public class CachedRuleViolation implements RuleViolation {
+@@ -92,7 +92,7 @@ public final class OAuth2AuthorizedClientArgumentResolver implements HandlerMeth
+ 							clientRegistrationId.flatMap(id -&gt; Mono.error(new IllegalStateException(
+ 									&quot;Unable to resolve the Authorized Client with registration identifier \&quot;&quot;
+ 											+ id
+-											+ &quot;\&quot;. An \&quot;authenticated\&quot; or \&quot;unauthenticated\&quot; session is required. To allow for unauthenticated access, ensure ServerHttpSecurity.anonymous() is configured.&quot;))))
++											+ &quot;\&quot;. An \&quot;authenticated\&quot; or \&quot;anonymous\&quot; request is required. To allow for anonymous access, ensure ServerHttpSecurity.anonymous() is configured.&quot;))))
+ 					.flatMap(zipped -&gt; {
+ 						String registrationId = zipped.getT1();
+ 						String username = zipped.getT2();
+## Human Review: I don&#39;t think this should be changed since on the reactive side we don&#39;t support anonymous users.
+## HF Pred: I don&#39;t think we should change this message. It&#39;s not clear to me why this is an error.
+## Fine Tuned Pred: I think this message should be updated. `An &quot;anonymous&quot; request is required. To allow for anonymous access, ServerHttpSecurity.anonymous() is configured.`
+-------------------
+@@ -3,7 +3,7 @@ const test = require(&#39;./shared&#39;).assert,
+   setupDatabase = require(&#39;./shared&#39;).setupDatabase,
+   Script = require(&#39;vm&#39;),
+   expect = require(&#39;chai&#39;).expect,
+-  normalizedFunctionString = require(&#39;bson/lib/bson/parser/utils&#39;).normalizedFunctionString,
++  normalizedFunctionString = require(&#39;bson/lib/parser/utils&#39;).normalizedFunctionString,
+   Buffer = require(&#39;safe-buffer&#39;).Buffer;
 
-     private final CachedRuleMapper mapper;
- 
-HF Pred: Why did you remove `final`
-Fine Tuned Pred: Why did you remove the final modif
+ const {
+## Human Review: feel free when editing sections like this to introduce modern features like object destructuring.
+## HF Pred: Why this change?
+## Fine Tuned Pred: whats with the whitespace changes in this file?
 -------------------
-@@ -225,6 +225,18 @@ class BokehPlot(DimensionedPlot):
-                     source.data.update(converted_data)
-                 else:
-                     source.stream(data, stream.length)
-+            return
+@@ -0,0 +1,17 @@
++&lt;?php
++/**
++ * Copyright © Bold Brand Commerce Sp. z o.o. All rights reserved.
++ * See LICENSE.txt for license details.
++ */
 +
-+        # Determine if the CDS.data requires a full update or simply needs
-+        # to be updated, this is done by determining whether newly added
-+        # or not updated columns have the same length
-+        new_length = [len(v) for v in data.values() if isinstance(v, (list, np.ndarray))]
-+        length = [len(v) for v in source.data.values() if isinstance(v, (list, np.ndarray))]
-+        not_updated = [k for k in source.data if k not in data]
-+        new = [k for k in data if k not in source.data]
-+        if ((not_updated and new_length and any(len(source.data[n]) != new_length[0] for n in not_updated))
-+            or (new and length and any(len(data[n]) != length[0] for n in new))):
-+            source.data = data
-         else:
-             source.data.update(data)
- 
-HF Pred: I don&#39;t think this is the right way to do this. If the length o
-Fine Tuned Pred: @Eric89GXL @mluessi do we need to check 
++declare(strict_types=1);
++
++namespace Ergonode\Core\Infrastructure\Exception;
++
++class SerializationException extends SerializerException
++{
++    public function __construct(string $message, \Throwable $previous = null)
++    {
++        parent::__construct($message, $previous);
++    }
++}
+## Human Review: I think it should been in `SharedKernel` module.
+## HF Pred: Missing license header.
+## Fine Tuned Pred: Why do we need a separate exception class here? Seems very specific to Elgg\Core\Infrastructure\Exception
 -------------------
-@@ -128,7 +128,7 @@ public class RestRequest {
- 	 *
- 	 * @param method				the HTTP method for the request (GET/POST/DELETE etc)
- 	 * @param path					the URI path, this will automatically be resolved against the users current instance host.
--	 * @param httpEntity			the request body if there is one, can be null.
-+	 * @param requestEntity			the request body if there is one, can be null.
- 	 */
- 	public RestRequest(RestMethod method, String path, HttpEntity requestEntity) {
- 		this(method, path, requestEntity, null);
-HF Pred: Why did you change this?
-Fine Tuned Pred: This change should be
--------------------
-@@ -37,6 +37,12 @@ module Selenium
-         def bridge_class
-           Bridge
-         end
-+
-+        def print_page(**options)
-+          options[:page_ranges] &amp;&amp;= Array(options[:page_ranges])
-+
-+          bridge.print_page(options)
-+        end
-       end # Driver
-     end # Firefox
-   end # WebDriver
-HF Pred: Extra empty line de
-Fine Tuned Pred: Use 2 (not 0) spaces for indenting an expre
+@@ -473,6 +473,7 @@ describe(&#39;GridFS Stream&#39;, function () {
+                     // Fail if user tries to abort an aborted stream
+                     uploadStream.abort().then(null, function (error) {
+                       expect(error.toString()).to.equal(
++                        // TODO(NODE-3405): Replace with MongoStreamClosedError
+                         &#39;MongoDriverError: Cannot call abort() on a stream twice&#39;
+                       );
+                       client.close(done);
+## Human Review: You can remove these if they&#39;ve been resolved in NODE-3405 and this isn&#39;t depending on it
+## HF Pred: Is this TODO still relevant?
+## Fine Tuned Pred: What is the problem here?
 </pre></div>
 </div>
 </div>
@@ -516,59 +510,71 @@ Fine Tuned Pred: Use 2 (not 0) spaces for indenting an expre
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-------------------
-@@ -1127,4 +1134,12 @@ registry.add(&#39;eslint-stylish&#39;, {
- 	applyTo: ApplyToKind.allDocuments,
- 	fileLocation: FileLocationKind.Absolute,
- 	pattern: defaultPattern(&#39;eslint-stylish&#39;)
--});
-\ No newline at end of file
-+});
-+
-+registry.add(&#39;go&#39;, {
-+	owner: &#39;typescript&#39;,
-+	applyTo: ApplyToKind.allDocuments,
-+	fileLocation: FileLocationKind.Relative,
-+	filePrefix: &#39;${cwd}&#39;,
-HF Pred: Why is this needed?
-Fine Tuned Pred: I am not sure if this is a good idea. It makes me wonder if we shoul
+@@ -340,6 +341,17 @@ export class DebugEditorContribution implements IDebugEditorContribution {
+ 		return new RunOnceScheduler(() =&gt; this.hoverWidget.hide(), HOVER_DELAY);
+ 	}
+ 
++	@memoize
++	private get provideNonDebugHoverScheduler(): RunOnceScheduler {
++		return new RunOnceScheduler(() =&gt; {
+## Human Review: Where is this disposed?
+## HF Pred: Why is this memoized?
+## Fine Tuned Pred: This is not `Runnable` but `RunOnceScheduler`, right?
 -------------------
-@@ -0,0 +1,46 @@
-+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-+&lt;component type=&quot;desktop&quot;&gt;
-+	&lt;id&gt;@@NAME@@.desktop&lt;/id&gt;
-+	&lt;metadata_license&gt;CC-BY-SA-3.0&lt;/metadata_license&gt;
-+	&lt;project_license&gt;MIT&lt;/project_license&gt;
-+	&lt;name&gt;@@NAME_LONG@@&lt;/name&gt;
-+	&lt;url type=&quot;homepage&quot;&gt;https://code.visualstudio.com&lt;/url&gt;
-+	&lt;summary&gt;Code editor for developers supporting integration with existing tools&lt;/summary&gt;
-+	&lt;description&gt;
-+		&lt;p&gt;
-+			Visual Studio Code is a lightweight but powerful source code editor which
-HF Pred: I think this should be `@@NA
-Fine Tuned Pred: We don&#39;t need this file, it&#39;s only 
+@@ -53,6 +53,11 @@ export class SassParser extends cssParser.Parser {
+ 
+ 	// Sass variables: $font-size: 12px;
+ 	public _parseVariableDeclaration(panic:scanner.TokenType[]=[]): nodes.VariableDeclaration {
++		var cssVariableDeclaration= super._parseCssVariableDeclaration(panic);
+## Human Review: That looks wrong. Not all places where you can declare a sass variable are also suited to declare a css variable.
+
+## HF Pred: Nit: space after `=`
+## Fine Tuned Pred: Minor style issue: missing space before the `=`
 -------------------
-@@ -171,7 +171,7 @@ export function distinct&lt;T&gt;(array: T[], keyFn?: (t: T) =&gt; string): T[] {
+@@ -537,6 +537,23 @@ export interface CompletionList {
+ 	 */
+ 	items: CompletionItem[];
  }
- 
- export function first&lt;T&gt;(array: T[], fn: (item: T) =&gt; boolean, notFoundValue: T = null): T {
--	for (let i = 0; i &lt; array.length; i++) {
-+	for (let i = 0, I = array.length; i &lt; I; i++) {
- 		const element = array[i];
-HF Pred: I think this should be `array.length - 1`
-Fine Tuned Pred: Wouldn&#39;t it be clearer to name this `array`?
++
++/**
++ * Contains additional information about the context in which
++ * [completion provider](#CompletionItemProvider.provideCompletionItems) is triggered.
++ */
++export interface CompletionContext {
+## Human Review: This also needs the following information  *manual* invocation, *24x7* IntelliSense, completing incomplete result set 
+## HF Pred: I don&#39;t think we need this interface. We can just use `CompletionItemProvider`.
+## Fine Tuned Pred: Is there a reason this is not an object?
 -------------------
-@@ -18,7 +18,6 @@ import { IWorkspaceContextService } from &#39;vs/platform/workspace/common/workspace
- import { IWorkbenchContribution, IWorkbenchContributionsRegistry, Extensions as WorkbenchExtensions } from &#39;vs/workbench/common/contributions&#39;;
-HF Pred: import { IWorkbenchContrib
-Fine Tuned Pred: Are these imports used somewhere?
--------------------
-@@ -74,6 +74,7 @@ export interface INextEditorGroupsAccessor {
- 	getGroup(identifier: GroupIdentifier): INextEditorGroupView;
+@@ -439,6 +441,16 @@ export class DebugService implements debug.IDebugService {
+ 		});
+ 	}
  
- 	addGroup(location: INextEditorGroupView | GroupIdentifier, direction: GroupDirection, options?: IAddGroupOptions): INextEditorGroup;
-+  removeGroup(): void;
-HF Pred: removeGroup(identifier: GroupIdentifier);
-Fine Tuned Pred: isn&#39;t this a breaking change?
++	private debouncedDisplayThreads(session: RawDebugSession) {
++		const timer = this.displayThreadsTimer.get(session.getId());
++		if (timer) {
++			clearTimeout(timer);
++		}
++		this.displayThreadsTimer.set(session.getId(), setTimeout(() =&gt; {
++			this.fetchThreads(session).done(undefined, errors.onUnexpectedError);
+## Human Review: This will make 
+## HF Pred: I&#39;m not sure if this is the best way to do this. I think it would be better to do this in the `fetchThreads` function.
+## Fine Tuned Pred: Is there a reason we can&#39;t just use `clearTimeout` here? Is there any difference in the code between `clearTimeout` and `set`?
+-------------------
+@@ -265,4 +266,33 @@ class MDDocumentContentProvider implements TextDocumentContentProvider {
+ 			}, 300);
+ 		}
+ 	}
++}
++
++class DocumentHeadingsProvider implements vscode.DocumentSymbolProvider {
++
++	// http://daringfireball.net/projects/markdown/syntax#header
++	private static _atxPattern = /^(#){1,6}\s+.+(\s+\1)?/;
++	private static _settext = /^\s*[-=]+\s*$/;
+## Human Review: Make sure to also test that this does not pick up separators
+
+## HF Pred: nit: `_atxPattern` -&gt; `_atxRegex`
+## Fine Tuned Pred: Remove this and use directly the `SymbolProvider` below.
 </pre></div>
 </div>
 </div>
@@ -581,71 +587,70 @@ Fine Tuned Pred: isn&#39;t this a breaking change?
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-------------------
-@@ -178,7 +181,7 @@ abstract class AbstractDebugTest : CodegenTestCase() {
-         var inBoxMethod = false
-         vmLoop@
-         while (true) {
--            val eventSet = virtualMachine.eventQueue().remove(1000)
-+            val eventSet = virtualMachine.eventQueue().remove(1000) ?: continue
-HF Pred: Why is this change needed?
-Fine Tuned Pred: This is the fix for the bug described in th
--------------------
-@@ -3,8 +3,8 @@ package kara.internal
- /* Test &lt;TYPO descr=&quot;Typo: In word &#39;somthing&#39;&quot;&gt;somthing&lt;/TYPO&gt; */
- class &lt;TYPO descr=&quot;Typo: In word &#39;Moree&#39;&quot;&gt;Moree&lt;/TYPO&gt;Fun {
-   fun &lt;TYPO descr=&quot;Typo: In word &#39;wrte&#39;&quot;&gt;wrte&lt;/TYPO&gt;() {
--    val &lt;TYPO descr=&quot;Typo: In word &#39;childen&#39;&quot;&gt;childen&lt;/TYPO&gt; = 12
--    val &lt;warning descr=&quot;[UNUSED_VARIABLE] Variable &#39;come&#39; is never used&quot;&gt;come&lt;/warning&gt; = childen
-+    val &lt;TYPO descr=&quot;Typo: In word &#39;children&#39;&quot;&gt;children&lt;/TYPO&gt; = 12
-HF Pred: Why did you remove this
-Fine Tuned Pred: I think this should be a warning instead of a warning.
--------------------
-@@ -0,0 +1,16 @@
-+// IGNORE_BACKEND: JVM
-+// KOTLIN_CONFIGURATION_FLAGS: ASSERTIONS_MODE=jvm
-+
-+class Outer {
-+    class Inner {
-+        fun f() { assert(true) }
-+    }
-+}
-+
-+// We set the assertion status based on top-level classes.
-+// 0 LDC LOuter\$Inner;.class
-+// Outer\$Inner.&lt;clinit&gt;:
-+// 1 LDC LOuter;.class\s*INVOKEVIRTUAL java/lang/Class.desiredAssertionStatus \(\)Z
-+// 1 PUTSTATIC Outer\$Inner.\$assertionsDisabled : Z
-+// Outer\$Inner.f:
-+// 1 GETSTATIC Outer\$Inner.\$assertionsDisabled
-HF Pred: I don&#39;t think this is the right place to put this code
-Fine Tuned Pred: Is there a reason why this doesn&#39;t go in `src/
--------------------
-@@ -247,7 +245,7 @@ internal abstract class IndicesHandler(protected val context: CommonBackendConte
+@@ -24,10 +24,13 @@ abstract class AbstractIrLineNumberTest : AbstractLineNumberTest() {
  
- internal class ArrayIndicesHandler(context: CommonBackendContext) : IndicesHandler(context) {
-HF Pred: }
-Fine Tuned Pred: Should be `ArrayBackend` instead of `CommonBackendContext`.
+     override fun compareCustom(psiFile: KtFile, wholeFile: File) {
+         val fileText = psiFile.text
+-        val expectedLineNumbers = normalize(
+-            fileText.substring(fileText.indexOf(&quot;//&quot;) + 2)
+-                .trim().split(&quot; &quot;).map { it.trim() }.toMutableList()
+-        )
++        val expectedLineNumbers = fileText.split(&quot;\n&quot;.toRegex()).filter { line -&gt;
+## Human Review: How about simplifying this to:
+
+        val expectedLineNumbers = normalize(
+            fileText.substring(Regex(&quot;// \\d+&quot;).find(fileText)!!.range.start + 2)
+                .trim().split(&quot; &quot;).map { it.trim() }.toMutableList()
+        )
+
+Then we are looking for a line that starts with &quot;// &quot; with a number of digits after it. That should work to exclude the comment lines with text. That looks consistent with what the old backend expects from these tests.
+## HF Pred: Why did you change this?
+## Fine Tuned Pred: Remove the `toRegex()` call here.
 -------------------
-@@ -0,0 +1,17 @@
-+// !DIAGNOSTICS: -UNUSED_PARAMETER
-+class C {
-+    &lt;!OVERLOADS_PRIVATE!&gt;[kotlin.jvm.overloads] private fun foo(s: String = &quot;OK&quot;)&lt;!&gt; {
-+    }
-+}
+@@ -45,7 +45,6 @@ import org.jetbrains.kotlin.types.KotlinType
+ import org.jetbrains.kotlin.types.typeUtil.isPrimitiveNumberType
+ import org.jetbrains.kotlin.types.typeUtil.makeNotNullable
+ import org.jetbrains.kotlin.types.typeUtil.makeNullable
+-import java.lang.AssertionError
+## Human Review: Pls remove this file from pr
+## HF Pred: import org.jetbrains.kotlin.util.KotlinConstants;
+## Fine Tuned Pred: Why did you remove this import?
+-------------------
+@@ -46,6 +46,7 @@ abstract class AbstractCheckLocalVariablesTableTest : CodegenTestCase() {
+             assertNotNull(&quot;Couldn&#39;t find class file for pattern $classFileRegex in: $pathsString&quot;, outputFile)
+ 
+             val actualLocalVariables = readLocalVariable(ClassReader(outputFile.asByteArray()), methodName)
++            checkLocalVariableTypes(ClassReader(outputFile.asByteArray()), methodName, actualLocalVariables)
+## Human Review: Could we reuse class reader from previous line?
+## HF Pred: assertEquals(expectedLocalVariables, actualLocalVariables)
+## Fine Tuned Pred: What&#39;s the purpose of this line?
+-------------------
+@@ -37,3 +37,17 @@ public fun Char.equals(other: Char, ignoreCase: Boolean = false): Boolean {
+  * Returns `true` if this character is a Unicode surrogate code unit.
+  */
+ public fun Char.isSurrogate(): Boolean = this in Char.MIN_SURROGATE..Char.MAX_SURROGATE
 +
-+fun foo() {
-+    class D {
-+        &lt;!OVERLOADS_PRIVATE!&gt;[kotlin.jvm.overloads] fun foo(s: String = &quot;OK&quot;)&lt;!&gt; {
-+        }
-+    }
-+
-+    val &lt;!UNUSED_VARIABLE!&gt;x&lt;!&gt; = object {
-+        &lt;!OVERLOADS_PRIVATE!&gt;[kotlin.jvm.overloads] fun foo(s: String = &quot;OK&quot;)&lt;!&gt; {
-+    }
-+    }
-+}
-HF Pred: I think we can remove `&lt;!UNUSED_VARIABLE!&gt;` here.
-Fine Tuned Pred: Shouldn&#39;t this be `-UNUSED_PARAMETER`?
++/**
++ * Minimum value for character
++ * @see &lt;a href=&quot;https://docs.oracle.com/javase/tutorial/java/nutsandbolts/datatypes.html&quot;&gt;
+## Human Review: I don&#39;t think this way of linking is supported in `@see` tag.  I&#39;m not sure what is the purpose of these links anyway.
+## HF Pred: This should be `Char.isSurrogate()`.
+## Fine Tuned Pred: Please remove the `&lt;a&gt;` tag.
+-------------------
+@@ -175,7 +195,9 @@ class ExpressionCodegen(
+ 
+     override fun visitBlockBody(body: IrBlockBody, data: BlockInfo): StackValue {
+         return body.statements.fold(none()) { _, exp -&gt;
+-            exp.accept(this, data)
++            val result = exp.accept(this, data)
++            (exp as? IrExpression)?.markEndOfStatementIfNeeded()
+## Human Review: ```
+exp.accept(this, data).also {
+       (exp as? IrExpression)?.markEndOfStatementIfNeeded()
+}
+```
+## HF Pred: Why is this needed?
+## Fine Tuned Pred: Unrelated to this PR, but this doesn&#39;t seem like the best place to markEndOfStatementIfNeeded. Should the markEndOfStatementIfNeeded be in some other place, or should the markEndOfStatementIfNeeded be in BlockInfoResolver?
 </pre></div>
 </div>
 </div>
@@ -658,53 +663,69 @@ Fine Tuned Pred: Shouldn&#39;t this be `-UNUSED_PARAMETER`?
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-------------------
-@@ -1,6 +1,6 @@
- import { expectError, expectType } from &#39;tsd&#39;
- import DefaultStore from &#39;@uppy/store-default&#39;
--import Uppy, { UIPlugin } from &#39;..&#39;
-+import Uppy, { SuccessResponse, UIPlugin, UppyFile } from &#39;..&#39;
- import type { UploadedUppyFile, FailedUppyFile, PluginOptions } from &#39;..&#39;
-HF Pred: Why do we need to ex
-Fine Tuned Pred: What&#39;s the reason for this change?
+@@ -28,6 +28,7 @@
+     &quot;@uppy/thumbnail-generator&quot;: &quot;0.29.1&quot;,
+     &quot;@uppy/utils&quot;: &quot;0.29.1&quot;,
+     &quot;classnames&quot;: &quot;^2.2.6&quot;,
++    &quot;cuid&quot;: &quot;^2.1.1&quot;,
+     &quot;drag-drop&quot;: &quot;2.13.3&quot;,
+## Human Review: In other places we are using uuid, I think, is there a reason to use different packages? I was actually gonna suggest we switch to https://github.com/ai/nanoid everywhere, it’s smaller and ids are smaller.
+## HF Pred: This should be `^2.1.0`, right?
+## Fine Tuned Pred: Why are we using a fixed version here?
 -------------------
-@@ -1076,6 +1076,7 @@ class Uppy {
-       const currentProgress = this.getFile(file.id).progress
-       this.setFileState(file.id, {
-         progress: Object.assign({}, currentProgress, {
-+          postprocess: this.postProcessors.length &gt; 0,
-HF Pred: postprocess: this.postProcessors.length &gt; 0,
-Fine Tuned Pred: Why don&#39;t we use `getPostProcessors` here as w
+@@ -49,7 +49,8 @@ class Tabs extends Component {
+             tabindex=&quot;-1&quot;
+             type=&quot;file&quot;
+             name=&quot;files[]&quot;
+-            multiple=&quot;true&quot;
++            multiple={this.props.maxNumberOfFiles !== 1 || !this.props.maxNumberOfFiles}
+## Human Review: same here
+## HF Pred: `multiple={this.props.maxNumberOfFiles !== 1}`
+## Fine Tuned Pred: shouldnt it be only true if `this.props.maxNumberOfFiles` is defined ?
 -------------------
-@@ -681,6 +681,8 @@ module.exports = class Tus extends Plugin {
-     this.uppy.on(&#39;reset-progress&#39;, this.handleResetProgress)
+@@ -496,6 +494,25 @@ module.exports = class ProviderView {
+     }
+   }
  
-     if (this.opts.autoRetry) {
-+      this.uppy.log(&#39;[Tus] The `autoRetry` option may be removed in Uppy 2.0. See https://github.com/transloadit/uppy/pull/2347 for alternatives.&#39;, &#39;warning&#39;)
-HF Pred: this.log(&#39;[Tus] The `autoRetry` option may b
-Fine Tuned Pred: This link is broken right now.
++  listAllFiles (path, files = null) {
++    files = files || []
++    return new Promise((resolve) =&gt; {
++      this.provider.list(path).then((res) =&gt; {
+## Human Review: should we add a `catch` for this call. Otherwise what will happen when the call to `this.provider.list` fails?
+## HF Pred: `files = files || []`
+## Fine Tuned Pred: `resolve` is unnecessary here, you can just call `this.provider.list(path, files)`
 -------------------
-@@ -142,6 +142,7 @@ module.exports = class DragDrop extends Plugin {
-     const restrictions = this.uppy.opts.restrictions
-     return (
-       &lt;input
-+        id={&#39;uppy-input-&#39; + this.id}
-HF Pred: const input
-Fine Tuned Pred: Does it matter that this is prefixed with `uppy-`?
+@@ -422,7 +422,7 @@ module.exports = class ProviderView {
+   }
+ 
+   handleAuth () {
+-    const authState = btoa(JSON.stringify({ origin: location.origin }))
++    const authState = btoa(JSON.stringify({ origin: location.origin, redirect: &#39;http://localhost:3&#39; }))
+     const link = `${this.provider.authUrl()}?state=${authState}`
+## Human Review: `http://localhost:3` 🤔 
+## HF Pred: I think this should be `https://localhost:3`
+## Fine Tuned Pred: I think it would be better if we could use `location.protocol` here instead of hardcoding `localhost:3`
 -------------------
-@@ -41,7 +41,7 @@ ar_SA.strings = {
-   encoding: &#39;التشفير...&#39;,
-   enterCorrectUrl: &#39;خطأ في الرابط: ارجو التأكد من ادخال رابط مباشر للملف&#39;,
-   enterUrlToImport: &#39;ادخل الرابط لاستيراد الملفات&#39;,
--  exceedsSize: &#39;الملف اكبر من الحجم المسموح&#39;,
-+  exceedsSize: &#39;الملف اكبر من الحجم المسموح %{size}&#39;,
-HF Pred: e
-Fine Tuned Pred: Can you provide the reason for this change?
+@@ -2,6 +2,14 @@
+ 
+ echo &quot;Preparing for end to end test: copying static HTML and CSS, building JS&quot;
+ rm -rf ./test/endtoend/dist &amp;&amp; mkdir ./test/endtoend/dist
+-cp ./dist/uppy.min.css ./test/endtoend/dist 
+-cp ./test/endtoend/src/index.html ./test/endtoend/dist 
++rm -rf ./test/endtoend/node_modules
++
++UPPY_VERSION=$(cat package.json | grep version | head -1 | awk -F= &quot;{ print $2 }&quot; | sed &#39;s/[version:,\&quot;,]//g&#39; | tr -d &#39;[[:space:]]&#39;)
++# archive the uppy package
++npm pack
+## Human Review: I think we should also run the `npm run prepublishOnly` script first here, so that the package is exactly the same as the published one (I thought this would happen automatically inside `npm pack` but it doesn&#39;t seem to)
+## HF Pred: Why do we need this?
+## Fine Tuned Pred: Do we want to keep the old version or is there a way to upgrade to a newer version?
 </pre></div>
 </div>
 </div>
 </div>
-<p>As we can see, the fine-tuned model produces better predictions than the HF model. The predictions are much more insightful and detailed. The HF model tends to produce more generic predictions, while the fine-tuned model produces predictions that are more specific to the code.</p>
-<p>Only one thing is weird: the codereviewer model predictions are sometimes cut and not shown in full. This is not due to sentence limits, as the limit is pretty high (512 tokens). Unfortunately, it is up to the future work to figure out the reason behind this.</p>
+<p>As we can see, the models are pretty mediocre at understanding the issue. But I find that the HF model tends to produce more generic predictions, while the fine-tuned model produces predictions that are more specific to the code and shows a better understanding.</p>
+<p>Still, both models predict something sensible but struggle to pin-point the problem.</p>
 </section>
 <section id="quantitative-evaluation">
 <h2>Quantitative Evaluation<a class="headerlink" href="#quantitative-evaluation" title="Permalink to this heading">#</a></h2>
@@ -720,11 +741,11 @@ Fine Tuned Pred: Can you provide the reason for this change?
 Total: 10169
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>HF BLEU: 4.25
-Fine Tuned BLEU: 4.71
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>HF BLEU: 5.14
+Fine Tuned BLEU: 5.34
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(4.25, 4.71)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(5.14, 5.34)
 </pre></div>
 </div>
 </div>
@@ -740,11 +761,11 @@ Fine Tuned BLEU: 4.71
 Total: 1000
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>HF BLEU: 2.39
-Fine Tuned BLEU: 3.41
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>HF BLEU: 3.39
+Fine Tuned BLEU: 4.02
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(2.39, 3.41)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(3.39, 4.02)
 </pre></div>
 </div>
 </div>
@@ -757,14 +778,16 @@ Fine Tuned BLEU: 3.41
 </div>
 <div class="cell_output docutils container">
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Total: 1000
-Total: 1000
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>HF BLEU: 2.71
-Fine Tuned BLEU: 3.91
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>HF BLEU: 3.39
+Fine Tuned BLEU: 4.32
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(2.71, 3.91)
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Total: 1000
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(3.39, 4.32)
 </pre></div>
 </div>
 </div>
@@ -777,20 +800,22 @@ Fine Tuned BLEU: 3.91
 </div>
 <div class="cell_output docutils container">
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Total: 1000
-Total: 1000
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>HF BLEU: 3.25
-Fine Tuned BLEU: 3.84
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>HF BLEU: 4.55
+Fine Tuned BLEU: 4.84
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(3.25, 3.84)
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Total: 1000
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(4.55, 4.84)
 </pre></div>
 </div>
 </div>
 </div>
-<p>As we can see, the fine-tuned model performs better than the HF model on all datasets. Nevertheless, the score is still pretty low. This means as authors put it “it is a hard task”.</p>
-<p>The semantic value of the predictions is also better, as we can see in the qualitative evaluation.</p>
+<p>As we can see, the fine-tuned model performs slightly better than the HF model on all datasets.</p>
+<p>Nevertheless, the score is still pretty low (as the authors of <span id="id1">[<a class="reference internal" href="../docs/intro.html#id2" title="Zhiyu Li, Shuai Lu, Daya Guo, Nan Duan, Shailesh Jannu, Grant Jenks, Deep Majumder, Jared Green, Alexey Svyatkovskiy, Shengyu Fu, and others. Codereviewer: pre-training for automating code review activities. arXiv preprint arXiv:2203.09095, 2022.">LLG+22</a>]</span> put it: “it is a hard task”).</p>
 </section>
 </section>
 
