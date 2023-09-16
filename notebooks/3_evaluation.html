@@ -19,12 +19,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=927b94d3fcb96560df09" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=927b94d3fcb96560df09" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=927b94d3fcb96560df09" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=927b94d3fcb96560df09" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
@@ -38,8 +38,9 @@
     <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=927b94d3fcb96560df09" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=927b94d3fcb96560df09" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=927b94d3fcb96560df09"></script>
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
@@ -76,6 +77,15 @@ const thebe_selector_output = ".output, .cell_output"
   
   
   <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
   
   <input type="checkbox"
           class="sidebar-toggle"
@@ -277,10 +287,10 @@ const thebe_selector_output = ".output, .cell_output"
 
 <script>
 document.write(`
-  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
-    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
-    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
   </button>
 `);
 </script>
@@ -288,11 +298,13 @@ document.write(`
 <script>
 document.write(`
   <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
 `);
 </script>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
 </div></div>
       
     </div>
@@ -308,6 +320,15 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qualitative-evaluation">Qualitative Evaluation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quantitative-evaluation">Quantitative Evaluation</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -321,53 +342,142 @@ document.write(`
 <h1>Predictions Evaluation<a class="headerlink" href="#predictions-evaluation" title="Permalink to this heading">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">sacrebleu</span> <span class="kn">import</span> <span class="n">BLEU</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="n">bleu</span> <span class="o">=</span> <span class="n">BLEU</span><span class="p">(</span><span class="n">max_ngram_order</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">calc_bleu_score</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Calculate BLEU score for a dataframe with code reviews predictions</span>
-<span class="sd">    :param df: Dataframe with columns &#39;target&#39; and &#39;prediction&#39;</span>
-<span class="sd">    :return: Returns BLEU score</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">df2</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">regex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">refs</span> <span class="o">=</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">df2</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">])]</span>
-    <span class="n">preds</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">df2</span><span class="p">[</span><span class="s1">&#39;prediction&#39;</span><span class="p">])</span>
-    <span class="k">return</span> <span class="n">bleu</span><span class="o">.</span><span class="n">corpus_score</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">refs</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">utils.smooth_bleu</span> <span class="kn">import</span> <span class="n">bleu_fromstr</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;../data/JetBrains_kotlin_100.hf_pred.csv&#39;</span>
+<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">analyze_preds</span><span class="p">(</span><span class="n">base_file</span><span class="p">,</span> <span class="n">sample_size</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+    <span class="c1"># read files</span>
+    <span class="n">hf_preds_file</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">base_file</span><span class="p">)</span><span class="o">.</span><span class="n">with_suffix</span><span class="p">(</span><span class="s1">&#39;.hf_pred.csv&#39;</span><span class="p">)</span>
+    <span class="n">fine_tuned_file</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">base_file</span><span class="p">)</span><span class="o">.</span><span class="n">with_suffix</span><span class="p">(</span><span class="s1">&#39;.finetuned_pred.csv&#39;</span><span class="p">)</span>
+    <span class="n">hf_preds</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">hf_preds_file</span><span class="p">)</span>
+    <span class="n">fine_tuned</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">fine_tuned_file</span><span class="p">)</span>
+    <span class="c1"># put in df</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;code&#39;</span><span class="p">:</span> <span class="n">fine_tuned</span><span class="p">[</span><span class="s1">&#39;code&#39;</span><span class="p">],</span> <span class="s1">&#39;hf_pred&#39;</span><span class="p">:</span> <span class="n">hf_preds</span><span class="p">[</span><span class="s1">&#39;prediction&#39;</span><span class="p">],</span> <span class="s1">&#39;fine_tuned_pred&#39;</span><span class="p">:</span> <span class="n">fine_tuned</span><span class="p">[</span><span class="s1">&#39;prediction&#39;</span><span class="p">]})</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">regex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="c1"># print sample with predictions</span>
+    <span class="n">sample</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">sample_size</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">code</span><span class="p">,</span> <span class="n">hf_pred</span><span class="p">,</span> <span class="n">fine_tuned_pred</span> <span class="ow">in</span> <span class="n">sample</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">():</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;-------------------&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">code</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;HF Pred: </span><span class="si">{</span><span class="n">hf_pred</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Fine Tuned Pred: </span><span class="si">{</span><span class="n">fine_tuned_pred</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">df</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
-<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">calc_bleu</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
+    <span class="n">refs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">])</span>
+    <span class="n">preds</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;prediction&#39;</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">preds</span><span class="p">)):</span>
+        <span class="n">chars</span> <span class="o">=</span> <span class="s2">&quot;(_)`.&quot;</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">chars</span><span class="p">:</span>
+            <span class="n">preds</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">preds</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">c</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span><span class="p">)</span>
+            <span class="n">preds</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">preds</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+            <span class="n">refs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">refs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">c</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span><span class="p">)</span>
+            <span class="n">refs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">refs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">bleu_fromstr</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">refs</span><span class="p">,</span> <span class="n">rmstop</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">calc_bleu_score</span><span class="p">(</span><span class="n">base_file</span><span class="p">):</span>
+    <span class="n">hf_preds_file</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">base_file</span><span class="p">)</span><span class="o">.</span><span class="n">with_suffix</span><span class="p">(</span><span class="s1">&#39;.hf_pred.csv&#39;</span><span class="p">)</span>
+    <span class="n">fine_tuned_file</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">base_file</span><span class="p">)</span><span class="o">.</span><span class="n">with_suffix</span><span class="p">(</span><span class="s1">&#39;.finetuned_pred.csv&#39;</span><span class="p">)</span>
+    <span class="n">hf_preds</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">hf_preds_file</span><span class="p">)</span>
+    <span class="n">ft_preds</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">fine_tuned_file</span><span class="p">)</span>
+    <span class="n">hf_preds</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">regex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">ft_preds</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">regex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">hf_bleu</span> <span class="o">=</span> <span class="n">calc_bleu</span><span class="p">(</span><span class="n">hf_preds</span><span class="p">)</span>
+    <span class="n">ft_bleu</span> <span class="o">=</span> <span class="n">calc_bleu</span><span class="p">(</span><span class="n">ft_preds</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;HF BLEU: </span><span class="si">{</span><span class="n">hf_bleu</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Fine Tuned BLEU: </span><span class="si">{</span><span class="n">ft_bleu</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">hf_bleu</span><span class="p">,</span> <span class="n">ft_bleu</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="qualitative-evaluation">
+<h2>Qualitative Evaluation<a class="headerlink" href="#qualitative-evaluation" title="Permalink to this heading">#</a></h2>
+<p>We will now compare the predictions of the HF model and the fine-tuned model on samples of the four datasets.</p>
+<p>We will print the code, the prediction of the HF model and the prediction of the fine-tuned model.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="p">{}</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="n">calc_bleu_score</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;msg&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">analyze_preds</span><span class="p">(</span><span class="s1">&#39;../data/msg-test&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;vscode&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">analyze_preds</span><span class="p">(</span><span class="s1">&#39;../data/microsoft_vscode_1000.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;kotlin&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">analyze_preds</span><span class="p">(</span><span class="s1">&#39;../data/JetBrains_kotlin_1000.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;uppy&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">analyze_preds</span><span class="p">(</span><span class="s1">&#39;../data/transloadit_uppy_1000.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>As we can see, the fine-tuned model produces better predictions than the HF model. The predictions are much more insightful and detailed. The HF model tends to produce more generic predictions, while the fine-tuned model produces predictions that are more specific to the code.</p>
+</section>
+<section id="quantitative-evaluation">
+<h2>Quantitative Evaluation<a class="headerlink" href="#quantitative-evaluation" title="Permalink to this heading">#</a></h2>
+<p>For each dataset, we calculate the <a class="reference external" href="https://en.wikipedia.org/wiki/BLEU">BLEU-4</a> score for the predictions of the HF model and the fine-tuned model. The BLEU score is a measure of how similar the predictions are to the target. The higher the score, the better the predictions.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="n">calc_bleu_score</span><span class="p">(</span><span class="s1">&#39;../data/msg-test&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="n">calc_bleu_score</span><span class="p">(</span><span class="s1">&#39;../data/microsoft_vscode_1000.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="n">calc_bleu_score</span><span class="p">(</span><span class="s1">&#39;../data/JetBrains_kotlin_1000.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="n">calc_bleu_score</span><span class="p">(</span><span class="s1">&#39;../data/transloadit_uppy_1000.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>As we can see, the fine-tuned model performs better than the HF model on all datasets. The semantic value of the predictions is also better, as we can see in the qualitative evaluation.</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -395,11 +505,10 @@ document.write(`
 
               
               
-                <footer class="bd-footer-article">
-                  
-<div class="footer-article-items footer-article__inner">
-  
-    <div class="footer-article-item"><!-- Previous / next buttons -->
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
        href="2_inference.html"
@@ -419,15 +528,27 @@ document.write(`
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
-</div></div>
-  
 </div>
-
                 </footer>
               
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qualitative-evaluation">Qualitative Evaluation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quantitative-evaluation">Quantitative Evaluation</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
@@ -471,8 +592,8 @@ By Alexander Kovrigin
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=927b94d3fcb96560df09"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=927b94d3fcb96560df09"></script>
 
   <footer class="bd-footer">
   </footer>

@@ -19,12 +19,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=927b94d3fcb96560df09" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=927b94d3fcb96560df09" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=927b94d3fcb96560df09" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=927b94d3fcb96560df09" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
@@ -38,8 +38,9 @@
     <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=927b94d3fcb96560df09" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=927b94d3fcb96560df09" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=927b94d3fcb96560df09"></script>
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
@@ -76,6 +77,15 @@ const thebe_selector_output = ".output, .cell_output"
   
   
   <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
   
   <input type="checkbox"
           class="sidebar-toggle"
@@ -277,10 +287,10 @@ const thebe_selector_output = ".output, .cell_output"
 
 <script>
 document.write(`
-  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
-    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
-    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
   </button>
 `);
 </script>
@@ -288,7 +298,7 @@ document.write(`
 <script>
 document.write(`
   <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
 `);
 </script>
@@ -421,7 +431,6 @@ document.write(`
     <span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
     
     <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-    
     <span class="k">for</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">dataloader</span><span class="p">):</span>
         <span class="n">inputs_mask</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">ne</span><span class="p">(</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">pad_id</span><span class="p">)</span>
         <span class="n">preds</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span>
@@ -433,10 +442,12 @@ document.write(`
             <span class="n">max_length</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span>
             <span class="n">num_return_sequences</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
         <span class="p">)</span>
+        <span class="c1"># decode the predictions</span>
         <span class="n">preds_np</span> <span class="o">=</span> <span class="n">preds</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
         <span class="n">preds_decoded</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">apply_along_axis</span><span class="p">(</span><span class="k">lambda</span> <span class="n">row</span><span class="p">:</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span>
             <span class="n">row</span><span class="p">[</span><span class="mi">2</span><span class="p">:],</span> <span class="n">skip_special_tokens</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">clean_up_tokenization_spaces</span><span class="o">=</span><span class="kc">False</span>
         <span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="n">preds_np</span><span class="p">)</span>
+        <span class="c1"># add the decoded predictions to the result</span>
         <span class="n">result</span> <span class="o">+=</span> <span class="nb">list</span><span class="p">(</span><span class="n">preds_decoded</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">result</span>
 </pre></div>
@@ -460,14 +471,6 @@ document.write(`
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 636/636 [10:03&lt;00:00,  1.05it/s]
-100%|██████████| 63/63 [02:42&lt;00:00,  2.58s/it]
-100%|██████████| 63/63 [01:46&lt;00:00,  1.70s/it]
-100%|██████████| 63/63 [01:19&lt;00:00,  1.26s/it]
-</pre></div>
-</div>
-</div>
 </div>
 </section>
 <section id="fine-tuned-codereviewer">
@@ -479,7 +482,7 @@ document.write(`
 <li><p><code class="docutils literal notranslate"><span class="pre">learning_rate=3e-4</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">max_source_length=512</span></code></p></li>
 </ul>
-<p>The execution took about 12 hours on a single NVIDIA GeForce A100 GPU. The model was fine-tuned for 3 epochs.</p>
+<p>The fine-tuning took about 12 hours on a single NVIDIA GeForce A100 GPU. The model was fine-tuned for 3 epochs.</p>
 <p>I have made the checkpoint available on the HuggingFace model hub: <a class="reference external" href="https://huggingface.co/waleko/codereviewer-finetuned-msg">https://huggingface.co/waleko/codereviewer-finetuned-msg</a></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -491,20 +494,6 @@ document.write(`
     <span class="n">df_pred</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;code&#39;</span><span class="p">:</span> <span class="n">dataset</span><span class="o">.</span><span class="n">code</span><span class="p">,</span> <span class="s1">&#39;target&#39;</span><span class="p">:</span> <span class="n">dataset</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="s1">&#39;prediction&#39;</span><span class="p">:</span> <span class="n">preds</span><span class="p">})</span>
     <span class="n">df_pred</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span><span class="o">.</span><span class="n">with_suffix</span><span class="p">(</span><span class="s1">&#39;.finetuned_pred.csv&#39;</span><span class="p">))</span>
     <span class="n">df_pred</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading (…)lve/main/config.json: 100%|██████████| 2.13k/2.13k [00:00&lt;00:00, 2.06MB/s]
-Downloading pytorch_model.bin: 100%|██████████| 892M/892M [00:22&lt;00:00, 40.2MB/s] 
-Some weights of the model checkpoint at waleko/codereviewer-finetuned-msg were not used when initializing T5ForConditionalGeneration: [&#39;cls_head.weight&#39;, &#39;cls_head.bias&#39;]
-- This IS expected if you are initializing T5ForConditionalGeneration from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
-- This IS NOT expected if you are initializing T5ForConditionalGeneration from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
-Downloading (…)neration_config.json: 100%|██████████| 168/168 [00:00&lt;00:00, 40.1kB/s]
-100%|██████████| 636/636 [14:22&lt;00:00,  1.36s/it]
-100%|██████████| 63/63 [01:31&lt;00:00,  1.45s/it]
-100%|██████████| 63/63 [01:24&lt;00:00,  1.35s/it]
-100%|██████████| 63/63 [01:21&lt;00:00,  1.29s/it]
 </pre></div>
 </div>
 </div>
@@ -538,11 +527,10 @@ Downloading (…)neration_config.json: 100%|██████████| 168/
 
               
               
-                <footer class="bd-footer-article">
-                  
-<div class="footer-article-items footer-article__inner">
-  
-    <div class="footer-article-item"><!-- Previous / next buttons -->
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
        href="1_collect_reviews.html"
@@ -562,10 +550,7 @@ Downloading (…)neration_config.json: 100%|██████████| 168/
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
-</div></div>
-  
 </div>
-
                 </footer>
               
             </div>
@@ -635,8 +620,8 @@ By Alexander Kovrigin
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=927b94d3fcb96560df09"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=927b94d3fcb96560df09"></script>
 
   <footer class="bd-footer">
   </footer>
