@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>CodeReviewer ML Performance &#8212; CodeReviewer ML Performance</title>
+    <title>Code Review Automation with Language Models &#8212; Code Review Automation with Language Models</title>
   
   
   
@@ -145,7 +145,7 @@ const thebe_selector_output = ".output, .cell_output"
   
   
   
-    <p class="title logo__title">CodeReviewer ML Performance</p>
+    <p class="title logo__title">Code Review Automation with Language Models</p>
   
 </a></div>
         <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
@@ -154,7 +154,7 @@ const thebe_selector_output = ".output, .cell_output"
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
                 <a class="reference internal" href="docs/intro.html">
-                    CodeReviewer ML Performance
+                    Code Review Automation with Language Models
                 </a>
             </li>
         </ul>
@@ -162,6 +162,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="notebooks/1_collect_reviews.html">Collecting Code Review Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="notebooks/2_inference.html">CodeReviewer Model Inference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="notebooks/3_evaluation.html">Predictions Evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs/conclusion.html">Conclusion</a></li>
 </ul>
 
     </div>
@@ -205,7 +206,7 @@ const thebe_selector_output = ".output, .cell_output"
 <div class="article-header-buttons">
 
 
-<a href="https://github.com/waleko/CodeReviewer-ML-Performance" target="_blank"
+<a href="https://github.com/waleko/Code-Review-Automation-LM" target="_blank"
    class="btn btn-sm btn-source-repository-button"
    title="Source repository"
    data-bs-placement="bottom" data-bs-toggle="tooltip"
@@ -300,7 +301,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
 </div></div>
       
     </div>
@@ -311,11 +314,28 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>CodeReviewer ML Performance</h1>
+    <h1>Code Review Automation with Language Models</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#key-features">Key Features</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-collection">1. Data Collection</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-inference-and-fine-tuning">2. Model Inference and Fine-Tuning</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-metrics">3. Evaluation Metrics</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-started">Getting Started</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#license">License</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contact">Contact</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -325,10 +345,70 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="codereviewer-ml-performance">
-<h1>CodeReviewer ML Performance<a class="headerlink" href="#codereviewer-ml-performance" title="Permalink to this heading">#</a></h1>
-<p><img alt="Static Badge" src="https://img.shields.io/badge/docs-available-orange?style=flat-square" />
+  <section class="tex2jax_ignore mathjax_ignore" id="code-review-automation-with-language-models">
+<h1>Code Review Automation with Language Models<a class="headerlink" href="#code-review-automation-with-language-models" title="Permalink to this heading">#</a></h1>
+<p><a class="reference external" href="https://alexkovrigin.me/Code-Review-Automation-LM"><img alt="Static Badge" src="https://img.shields.io/badge/docs-available-orange?style=flat-square" /></a>
 <a class="reference external" href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg?style=flat-square" /></a></p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">#</a></h2>
+<p>Code review is a crucial aspect of the software development process, ensuring that code changes are thoroughly examined
+for quality, security, and adherence to coding standards. However, the code review process can be time-consuming, and
+human reviewers may overlook certain issues. To address these challenges, we have developed a Code Review Automation
+system powered by language models.</p>
+<p>Our system leverages state-of-the-art language models to generate code reviews automatically. These models are trained
+on a vast corpus of code and can provide insightful feedback on code changes. By automating part of the code review
+process, our system aims to:</p>
+<ul class="simple">
+<li><p>Speed up the code review process.</p></li>
+<li><p>Identify common code issues and provide recommendations.</p></li>
+<li><p>Assist developers in producing higher-quality code.</p></li>
+</ul>
+</section>
+<section id="key-features">
+<h2>Key Features<a class="headerlink" href="#key-features" title="Permalink to this heading">#</a></h2>
+<section id="data-collection">
+<h3>1. Data Collection<a class="headerlink" href="#data-collection" title="Permalink to this heading">#</a></h3>
+<p>Our system collects code review data from popular GitHub repositories. This data includes code changes and associated
+human-authored code reviews. By leveraging this data, our models learn to generate contextually relevant code reviews.</p>
+</section>
+<section id="model-inference-and-fine-tuning">
+<h3>2. Model Inference and Fine-Tuning<a class="headerlink" href="#model-inference-and-fine-tuning" title="Permalink to this heading">#</a></h3>
+<p>We use pre-trained language models and fine-tune them on code review datasets. Fine-tuning allows the models to
+specialize in generating code reviews, making them more effective in this task.</p>
+<p>Once the models are trained, they can generate code reviews for new code changes. These generated reviews can highlight
+potential issues, suggest improvements, and provide feedback to developers.</p>
+</section>
+<section id="evaluation-metrics">
+<h3>3. Evaluation Metrics<a class="headerlink" href="#evaluation-metrics" title="Permalink to this heading">#</a></h3>
+<p>We use the BLEU-4 score metric to assess the quality of generated code reviews. This metric measures the similarity
+between model-generated reviews and target human reviews. While our models provide valuable assistance, they are
+designed to complement human reviewers.</p>
+</section>
+</section>
+<section id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this heading">#</a></h2>
+<p>To get started with our Code Review Automation system, follow these steps:</p>
+<ol class="arabic">
+<li><p>Clone this repository to your local machine:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/waleko/Code-Review-Automation-LM.git
+<span class="nb">cd</span><span class="w"> </span>Code-Review-Automation-LM
+</pre></div>
+</div>
+</li>
+<li><p>Set up the required dependencies and environment (see <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code>).</p></li>
+<li><p>Run the provided notebooks to explore data collection, model inference, and evaluation.</p></li>
+<li><p>Integrate the code review automation system into your development workflow. You can use our pre-trained models or
+fine-tune them on your specific codebase for even better results.</p></li>
+</ol>
+</section>
+<section id="license">
+<h2>License<a class="headerlink" href="#license" title="Permalink to this heading">#</a></h2>
+<p>This project is licensed under the Apache 2.0 License - see the <a class="reference download internal" download="" href="_downloads/9879d6db96fd29134fc802214163b95a/LICENSE"><span class="xref download myst">LICENSE</span></a> file for details.</p>
+</section>
+<section id="contact">
+<h2>Contact<a class="headerlink" href="#contact" title="Permalink to this heading">#</a></h2>
+<p>For any questions or inquiries, please contact <a class="reference external" href="mailto:inbox&#37;&#52;&#48;alexkovrigin&#46;me">inbox<span>&#64;</span>alexkovrigin<span>&#46;</span>me</a>.</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -367,6 +447,29 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#key-features">Key Features</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-collection">1. Data Collection</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-inference-and-fine-tuning">2. Model Inference and Fine-Tuning</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-metrics">3. Evaluation Metrics</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-started">Getting Started</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#license">License</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contact">Contact</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>

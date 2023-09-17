@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>CodeReviewer ML Performance &#8212; CodeReviewer ML Performance</title>
+    <title>Code Review Automation with Language Models &#8212; Code Review Automation with Language Models</title>
   
   
   
@@ -146,7 +146,7 @@ const thebe_selector_output = ".output, .cell_output"
   
   
   
-    <p class="title logo__title">CodeReviewer ML Performance</p>
+    <p class="title logo__title">Code Review Automation with Language Models</p>
   
 </a></div>
         <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
@@ -155,7 +155,7 @@ const thebe_selector_output = ".output, .cell_output"
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1 current active">
                 <a class="reference internal" href="#">
-                    CodeReviewer ML Performance
+                    Code Review Automation with Language Models
                 </a>
             </li>
         </ul>
@@ -163,6 +163,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="../notebooks/1_collect_reviews.html">Collecting Code Review Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../notebooks/2_inference.html">CodeReviewer Model Inference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../notebooks/3_evaluation.html">Predictions Evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conclusion.html">Conclusion</a></li>
 </ul>
 
     </div>
@@ -206,7 +207,7 @@ const thebe_selector_output = ".output, .cell_output"
 <div class="article-header-buttons">
 
 
-<a href="https://github.com/waleko/CodeReviewer-ML-Performance" target="_blank"
+<a href="https://github.com/waleko/Code-Review-Automation-LM" target="_blank"
    class="btn btn-sm btn-source-repository-button"
    title="Source repository"
    data-bs-placement="bottom" data-bs-toggle="tooltip"
@@ -314,7 +315,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>CodeReviewer ML Performance</h1>
+    <h1>Code Review Automation with Language Models</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -324,6 +325,12 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#collecting-code-review-data">Collecting Code Review Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#codereviewer-model-inference">CodeReviewer Model Inference</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#predictions-evaluation">Predictions Evaluation</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#table-of-contents">Table of Contents</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bibliography">Bibliography</a></li>
 </ul>
@@ -337,13 +344,48 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="codereviewer-ml-performance">
-<h1>CodeReviewer ML Performance<a class="headerlink" href="#codereviewer-ml-performance" title="Permalink to this heading">#</a></h1>
-<p>This is a small sample book to give you a feel for how book content is
-structured.
-It shows off a few of the major file types, as well as some sample content.
-It does not go in-depth into any particular topic - check out <a class="reference external" href="https://jupyterbook.org">the Jupyter Book documentation</a> for more information.</p>
-<p>Check out the content pages bundled with this sample book to see more.</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="code-review-automation-with-language-models">
+<h1>Code Review Automation with Language Models<a class="headerlink" href="#code-review-automation-with-language-models" title="Permalink to this heading">#</a></h1>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">#</a></h2>
+<p>In this series of Jupyter notebooks, we embark on a journey to collect code review data from GitHub repositories and
+perform code review predictions using language models. Our primary goal is to explore the capabilities of different
+models in generating code reviews and evaluate their performance.</p>
+<section id="collecting-code-review-data">
+<h3>Collecting Code Review Data<a class="headerlink" href="#collecting-code-review-data" title="Permalink to this heading">#</a></h3>
+<p>In this initial notebook, we dive into the process of collecting code review data from GitHub repositories. We leverage
+the PyGithub library to interact with the GitHub API, ensuring seamless data retrieval.</p>
+<p>We establish a function to collect code review data from a GitHub repository, allowing us to specify parameters such as
+the number of comments to load, skipping author comments, and more. The collected data is structured into a Pandas
+DataFrame for further analysis and processing.</p>
+<p>Three prominent repositories, namely <code class="docutils literal notranslate"><span class="pre">microsoft/vscode</span></code>, <code class="docutils literal notranslate"><span class="pre">JetBrains/kotlin</span></code>, and <code class="docutils literal notranslate"><span class="pre">transloadit/uppy</span></code>, are selected for
+data collection due to their popularity and rich code review history. Additionally, we are going to use data from the
+original CodeReviewer dataset <code class="docutils literal notranslate"><span class="pre">msg-test</span></code> that is provided by the authors of <span id="id1">[<a class="reference internal" href="#id3" title="Zhiyu Li, Shuai Lu, Daya Guo, Nan Duan, Shailesh Jannu, Grant Jenks, Deep Majumder, Jared Green, Alexey Svyatkovskiy, Shengyu Fu, and others. Codereviewer: pre-training for automating code review activities. arXiv preprint arXiv:2203.09095, 2022.">LLG+22</a>]</span>.</p>
+</section>
+<section id="codereviewer-model-inference">
+<h3>CodeReviewer Model Inference<a class="headerlink" href="#codereviewer-model-inference" title="Permalink to this heading">#</a></h3>
+<p>The second notebook focuses on generating code reviews using the <code class="docutils literal notranslate"><span class="pre">microsoft/codereviewer</span></code> model. We delve into the
+tokenization and dataset preparation process, emphasizing the importance of specialized tokens.</p>
+<p>A custom <code class="docutils literal notranslate"><span class="pre">ReviewsDataset</span></code> class is introduced to facilitate data loading and transformation, making it compatible with
+model inference. We load data from various sources, creating DataLoader instances for efficient model input.</p>
+<p>We explore the model inference process, employing both a HuggingFace pre-trained checkpoint and a fine-tuned
+CodeReviewer model. The fine-tuning process details are outlined, showcasing parameters and resources used. Model
+predictions are saved.</p>
+</section>
+<section id="predictions-evaluation">
+<h3>Predictions Evaluation<a class="headerlink" href="#predictions-evaluation" title="Permalink to this heading">#</a></h3>
+<p>In this notebook, we assess the quality of code review predictions generated by the models. Both HuggingFace pre-trained and
+fine-tuned models are evaluated across different datasets, shedding light on their performance.</p>
+<p>Qualitative assessment is conducted to gain insights into how the models generate code reviews. We present samples of
+code, along with predictions from both models, enabling a visual comparison with human reviews. This helps in
+understanding the nuances of model-generated reviews.</p>
+<p>Lastly, we quantitatively evaluate the models’ performance using BLEU-4 scores. We calculate scores for each dataset,
+providing a comprehensive overview of how well the models align with human reviews. This quantitative analysis helps in
+drawing conclusions about the effectiveness of the models in code review prediction.</p>
+<p>Throughout this journey, we aim to explore the capabilities and limitations of language models in the context of code
+review, shedding light on their potential applications and areas for improvement.</p>
+</section>
+</section>
 <section id="table-of-contents">
 <h2>Table of Contents<a class="headerlink" href="#table-of-contents" title="Permalink to this heading">#</a></h2>
 <div class="toctree-wrapper compound">
@@ -351,18 +393,19 @@ It does not go in-depth into any particular topic - check out <a class="referenc
 <li class="toctree-l1"><a class="reference internal" href="../notebooks/1_collect_reviews.html">Collecting Code Review Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../notebooks/2_inference.html">CodeReviewer Model Inference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../notebooks/3_evaluation.html">Predictions Evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conclusion.html">Conclusion</a></li>
 </ul>
 </div>
 </section>
 <section id="bibliography">
 <h2>Bibliography<a class="headerlink" href="#bibliography" title="Permalink to this heading">#</a></h2>
-<div class="docutils container" id="id1">
-<div class="citation" id="id4" role="doc-biblioentry">
+<div class="docutils container" id="id2">
+<div class="citation" id="id5" role="doc-biblioentry">
 <span class="label"><span class="fn-bracket">[</span>p4v<span class="fn-bracket">]</span></span>
 <p>CodeBERT CodeReviewer - a Hugging Face Space by p4vv37. URL: <a class="reference external" href="https://huggingface.co/spaces/p4vv37/CodeBERT_CodeReviewer">https://huggingface.co/spaces/p4vv37/CodeBERT_CodeReviewer</a> (visited on 2023-09-13).</p>
 </div>
-<div class="citation" id="id2" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>LLG+22<span class="fn-bracket">]</span></span>
+<div class="citation" id="id3" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">LLG+22</a><span class="fn-bracket">]</span></span>
 <p>Zhiyu Li, Shuai Lu, Daya Guo, Nan Duan, Shailesh Jannu, Grant Jenks, Deep Majumder, Jared Green, Alexey Svyatkovskiy, Shengyu Fu, and others. Codereviewer: pre-training for automating code review activities. <em>arXiv preprint arXiv:2203.09095</em>, 2022.</p>
 </div>
 </div>
@@ -424,6 +467,12 @@ It does not go in-depth into any particular topic - check out <a class="referenc
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#collecting-code-review-data">Collecting Code Review Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#codereviewer-model-inference">CodeReviewer Model Inference</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#predictions-evaluation">Predictions Evaluation</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#table-of-contents">Table of Contents</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bibliography">Bibliography</a></li>
 </ul>

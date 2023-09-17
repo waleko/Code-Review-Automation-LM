@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Collecting Code Review Data &#8212; CodeReviewer ML Performance</title>
+    <title>Collecting Code Review Data &#8212; Code Review Automation with Language Models</title>
   
   
   
@@ -66,7 +66,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="CodeReviewer Model Inference" href="2_inference.html" />
-    <link rel="prev" title="CodeReviewer ML Performance" href="../docs/intro.html" />
+    <link rel="prev" title="Code Review Automation with Language Models" href="../docs/intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -147,7 +147,7 @@ const thebe_selector_output = ".output, .cell_output"
   
   
   
-    <p class="title logo__title">CodeReviewer ML Performance</p>
+    <p class="title logo__title">Code Review Automation with Language Models</p>
   
 </a></div>
         <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
@@ -156,7 +156,7 @@ const thebe_selector_output = ".output, .cell_output"
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
                 <a class="reference internal" href="../docs/intro.html">
-                    CodeReviewer ML Performance
+                    Code Review Automation with Language Models
                 </a>
             </li>
         </ul>
@@ -164,6 +164,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Collecting Code Review Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="2_inference.html">CodeReviewer Model Inference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3_evaluation.html">Predictions Evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../docs/conclusion.html">Conclusion</a></li>
 </ul>
 
     </div>
@@ -207,7 +208,7 @@ const thebe_selector_output = ".output, .cell_output"
 <div class="article-header-buttons">
 
 
-<a href="https://github.com/waleko/CodeReviewer-ML-Performance" target="_blank"
+<a href="https://github.com/waleko/Code-Review-Automation-LM" target="_blank"
    class="btn btn-sm btn-source-repository-button"
    title="Source repository"
    data-bs-placement="bottom" data-bs-toggle="tooltip"
@@ -422,7 +423,7 @@ document.write(`
 <li><p><a class="reference external" href="https://github.com/JetBrains/kotlin">JetBrains/kotlin</a></p></li>
 <li><p><a class="reference external" href="https://github.com/transloadit/uppy">transloadit/uppy</a></p></li>
 </ul>
-<p>I have chosen these repositories because they are popular, and they have a large number of pull requests with code review comments. The authors of <span id="id1">[<a class="reference internal" href="../docs/intro.html#id2" title="Zhiyu Li, Shuai Lu, Daya Guo, Nan Duan, Shailesh Jannu, Grant Jenks, Deep Majumder, Jared Green, Alexey Svyatkovskiy, Shengyu Fu, and others. Codereviewer: pre-training for automating code review activities. arXiv preprint arXiv:2203.09095, 2022.">LLG+22</a>]</span> have also used similar criteria to select repositories for their study.</p>
+<p>I have chosen these repositories because they are popular, and they have a large number of pull requests with code review comments. The authors of <span id="id1">[<a class="reference internal" href="../docs/intro.html#id3" title="Zhiyu Li, Shuai Lu, Daya Guo, Nan Duan, Shailesh Jannu, Grant Jenks, Deep Majumder, Jared Green, Alexey Svyatkovskiy, Shengyu Fu, and others. Codereviewer: pre-training for automating code review activities. arXiv preprint arXiv:2203.09095, 2022.">LLG+22</a>]</span> have also used similar criteria to select repositories for their study.</p>
 <p>The data will be saved to the <code class="docutils literal notranslate"><span class="pre">data</span></code> folder.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -441,7 +442,7 @@ document.write(`
 <div class="cell_output docutils container">
 <script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "9eb04ed386bd42408400c9e678d7dc03"}</script><script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "a5d97e03b80241c1b3bed5f92fcc2b04"}</script><script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "febb271ebb0f4e779e2703be84355c2a"}</script></div>
 </div>
-<p>Additionally, we will be using the test data from <span id="id2">[<a class="reference internal" href="../docs/intro.html#id2" title="Zhiyu Li, Shuai Lu, Daya Guo, Nan Duan, Shailesh Jannu, Grant Jenks, Deep Majumder, Jared Green, Alexey Svyatkovskiy, Shengyu Fu, and others. Codereviewer: pre-training for automating code review activities. arXiv preprint arXiv:2203.09095, 2022.">LLG+22</a>]</span> and their <a class="reference external" href="https://zenodo.org/record/6900648/preview/Comment_Generation.zip">dataset on zenodo</a>. This dataset is available at <code class="docutils literal notranslate"><span class="pre">data/msg-test.csv</span></code>.</p>
+<p>Additionally, we will be using the test data from <span id="id2">[<a class="reference internal" href="../docs/intro.html#id3" title="Zhiyu Li, Shuai Lu, Daya Guo, Nan Duan, Shailesh Jannu, Grant Jenks, Deep Majumder, Jared Green, Alexey Svyatkovskiy, Shengyu Fu, and others. Codereviewer: pre-training for automating code review activities. arXiv preprint arXiv:2203.09095, 2022.">LLG+22</a>]</span> and their <a class="reference external" href="https://zenodo.org/record/6900648/preview/Comment_Generation.zip">dataset on zenodo</a>. This dataset is available at <code class="docutils literal notranslate"><span class="pre">data/msg-test.csv</span></code>.</p>
 </section>
 
     <script type="text/x-thebe-config">
@@ -480,7 +481,7 @@ document.write(`
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">CodeReviewer ML Performance</p>
+        <p class="prev-next-title">Code Review Automation with Language Models</p>
       </div>
     </a>
     <a class="right-next"

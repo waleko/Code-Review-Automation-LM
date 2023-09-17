@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>CodeReviewer Model Inference &#8212; CodeReviewer ML Performance</title>
+    <title>CodeReviewer Model Inference &#8212; Code Review Automation with Language Models</title>
   
   
   
@@ -147,7 +147,7 @@ const thebe_selector_output = ".output, .cell_output"
   
   
   
-    <p class="title logo__title">CodeReviewer ML Performance</p>
+    <p class="title logo__title">Code Review Automation with Language Models</p>
   
 </a></div>
         <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
@@ -156,7 +156,7 @@ const thebe_selector_output = ".output, .cell_output"
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
                 <a class="reference internal" href="../docs/intro.html">
-                    CodeReviewer ML Performance
+                    Code Review Automation with Language Models
                 </a>
             </li>
         </ul>
@@ -164,6 +164,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="1_collect_reviews.html">Collecting Code Review Data</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">CodeReviewer Model Inference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3_evaluation.html">Predictions Evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../docs/conclusion.html">Conclusion</a></li>
 </ul>
 
     </div>
@@ -207,7 +208,7 @@ const thebe_selector_output = ".output, .cell_output"
 <div class="article-header-buttons">
 
 
-<a href="https://github.com/waleko/CodeReviewer-ML-Performance" target="_blank"
+<a href="https://github.com/waleko/Code-Review-Automation-LM" target="_blank"
    class="btn btn-sm btn-source-repository-button"
    title="Source repository"
    data-bs-placement="bottom" data-bs-toggle="tooltip"
@@ -346,7 +347,7 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="codereviewer-model-inference">
 <h1>CodeReviewer Model Inference<a class="headerlink" href="#codereviewer-model-inference" title="Permalink to this heading">#</a></h1>
-<p>Let’s generate code reviews using <code class="docutils literal notranslate"><span class="pre">microsoft/codereviewer</span></code> model <span id="id1">[<a class="reference internal" href="../docs/intro.html#id2" title="Zhiyu Li, Shuai Lu, Daya Guo, Nan Duan, Shailesh Jannu, Grant Jenks, Deep Majumder, Jared Green, Alexey Svyatkovskiy, Shengyu Fu, and others. Codereviewer: pre-training for automating code review activities. arXiv preprint arXiv:2203.09095, 2022.">LLG+22</a>]</span>.</p>
+<p>Let’s generate code reviews using <code class="docutils literal notranslate"><span class="pre">microsoft/codereviewer</span></code> model <span id="id1">[<a class="reference internal" href="../docs/intro.html#id3" title="Zhiyu Li, Shuai Lu, Daya Guo, Nan Duan, Shailesh Jannu, Grant Jenks, Deep Majumder, Jared Green, Alexey Svyatkovskiy, Shengyu Fu, and others. Codereviewer: pre-training for automating code review activities. arXiv preprint arXiv:2203.09095, 2022.">LLG+22</a>]</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
@@ -365,7 +366,7 @@ document.write(`
 </div>
 <section id="tokenizers-and-datasets">
 <h2>1 Tokenizers and Datasets<a class="headerlink" href="#tokenizers-and-datasets" title="Permalink to this heading">#</a></h2>
-<p>P.S. Enormous thanks to the authors of <span id="id2">[<a class="reference internal" href="../docs/intro.html#id4" title="CodeBERT CodeReviewer - a Hugging Face Space by p4vv37. URL: https://huggingface.co/spaces/p4vv37/CodeBERT_CodeReviewer (visited on 2023-09-13).">p4v</a>]</span> for providing open-source for working with the tokenizer and the dataset.</p>
+<p>P.S. Enormous thanks to the authors of <span id="id2">[<a class="reference internal" href="../docs/intro.html#id5" title="CodeBERT CodeReviewer - a Hugging Face Space by p4vv37. URL: https://huggingface.co/spaces/p4vv37/CodeBERT_CodeReviewer (visited on 2023-09-13).">p4v</a>]</span> for providing open-source for working with the tokenizer and the dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># download tokenizer from huggingface</span>
@@ -419,7 +420,7 @@ document.write(`
 <h2>3 Predict<a class="headerlink" href="#predict" title="Permalink to this heading">#</a></h2>
 <p>Now we can generate code reviews for each project. We will use two models:</p>
 <ul class="simple">
-<li><p>Pre-trained model from HuggingFace provided by the authors of <span id="id3">[<a class="reference internal" href="../docs/intro.html#id2" title="Zhiyu Li, Shuai Lu, Daya Guo, Nan Duan, Shailesh Jannu, Grant Jenks, Deep Majumder, Jared Green, Alexey Svyatkovskiy, Shengyu Fu, and others. Codereviewer: pre-training for automating code review activities. arXiv preprint arXiv:2203.09095, 2022.">LLG+22</a>]</span></p></li>
+<li><p>Pre-trained model from HuggingFace provided by the authors of <span id="id3">[<a class="reference internal" href="../docs/intro.html#id3" title="Zhiyu Li, Shuai Lu, Daya Guo, Nan Duan, Shailesh Jannu, Grant Jenks, Deep Majumder, Jared Green, Alexey Svyatkovskiy, Shengyu Fu, and others. Codereviewer: pre-training for automating code review activities. arXiv preprint arXiv:2203.09095, 2022.">LLG+22</a>]</span></p></li>
 <li><p>Fine-tuned model on the CodeReviewer dataset</p></li>
 </ul>
 <section id="predict-function">
@@ -483,7 +484,7 @@ document.write(`
 </section>
 <section id="fine-tuned-codereviewer">
 <h3>Fine-tuned CodeReviewer<a class="headerlink" href="#fine-tuned-codereviewer" title="Permalink to this heading">#</a></h3>
-<p>I fine-tuned the model on the CodeReviewer dataset on the <code class="docutils literal notranslate"><span class="pre">msg</span></code> task using the <a class="reference external" href="https://github.com/microsoft/CodeBERT/tree/master/CodeReviewer#3-finetuneinference">instructions</a> from the authors of <span id="id4">[<a class="reference internal" href="../docs/intro.html#id2" title="Zhiyu Li, Shuai Lu, Daya Guo, Nan Duan, Shailesh Jannu, Grant Jenks, Deep Majumder, Jared Green, Alexey Svyatkovskiy, Shengyu Fu, and others. Codereviewer: pre-training for automating code review activities. arXiv preprint arXiv:2203.09095, 2022.">LLG+22</a>]</span>.</p>
+<p>I fine-tuned the model on the CodeReviewer dataset on the <code class="docutils literal notranslate"><span class="pre">msg</span></code> task using the <a class="reference external" href="https://github.com/microsoft/CodeBERT/tree/master/CodeReviewer#3-finetuneinference">instructions</a> from the authors of <span id="id4">[<a class="reference internal" href="../docs/intro.html#id3" title="Zhiyu Li, Shuai Lu, Daya Guo, Nan Duan, Shailesh Jannu, Grant Jenks, Deep Majumder, Jared Green, Alexey Svyatkovskiy, Shengyu Fu, and others. Codereviewer: pre-training for automating code review activities. arXiv preprint arXiv:2203.09095, 2022.">LLG+22</a>]</span>.</p>
 <p>For the fine-tuning I used the following parameters:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">batch_size=16</span></code></p></li>
