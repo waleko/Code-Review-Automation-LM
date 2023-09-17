@@ -5,6 +5,8 @@
 In this series of Jupyter notebooks, we embark on a journey to collect code review data from GitHub repositories and
 perform code review predictions using language models. Our primary goal is to explore the capabilities of the [CodeReviewer](https://arxiv.org/abs/2203.09095) model in generating code reviews and evaluate its performance.
 
+![CodeReviewer Overview](https://alexkovrigin.me/data/Screenshot%202023-09-17%20121440.png)
+
 ### Collecting Code Review Data
 
 In this initial notebook, we dive into the process of collecting code review data from GitHub repositories. We leverage
