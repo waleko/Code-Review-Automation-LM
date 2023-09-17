@@ -36,6 +36,11 @@ code, along with predictions from both models, enabling a visual comparison with
 Lastly, we quantitatively evaluate the models' performance using BLEU-4 scores. We calculate scores for each dataset,
 providing a comprehensive overview of how well the models align with human reviews.
 
+
+## Acknowledgements
+Incredible thanks to the authors of [CodeReviewer](https://arxiv.org/abs/2203.09095) for their scientific contributions.
+This work is basically an in-depth exploration of their research, and I am grateful for their efforts.
+
 ## Table of Contents
 
 ```{tableofcontents}

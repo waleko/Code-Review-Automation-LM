@@ -54,6 +54,10 @@ To get started with our work, follow these steps:
 
 3. Run the provided notebooks to explore data collection, model inference, and evaluation.
 
+## Acknowledgements
+Incredible thanks to the authors of [CodeReviewer](https://arxiv.org/abs/2203.09095) for their scientific contributions.
+This work is basically an in-depth exploration of their research, and I am grateful for their efforts.
+
 ## License
 
 This project is licensed under the Apache 2.0 License - see the [LICENSE](LICENSE) file for details.
