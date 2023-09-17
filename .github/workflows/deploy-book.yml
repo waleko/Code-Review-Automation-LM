@@ -19,15 +19,16 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    # Install dependencies
     - name: Set up Python 3.8
       uses: actions/setup-python@v2
       with:
         python-version: 3.8
 
     - name: Install dependencies
+      # Fixed versions due to stupid bug: https://github.com/executablebooks/jupyter-book/issues/2026
       run: |
-        pip install jupyter-book
+        pip install jupyter-book==0.15.1
+        pip install docutils==0.17.1
 
     # Build the book
     - name: Build the book
